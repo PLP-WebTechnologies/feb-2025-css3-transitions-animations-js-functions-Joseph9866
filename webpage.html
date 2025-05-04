@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Animation + LocalStorage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .animate {
+      animation: pulse 0.5s ease;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="actionBtn">Click Me!</button>
+  <div id="status"></div>
+
+  <script>
+    const btn = document.getElementById("actionBtn");
+    const statusDiv = document.getElementById("status");
+
+    // Function to save user preference
+    function savePreference() {
+      localStorage.setItem("clicked", "true");
+      statusDiv.textContent = "Preference saved! Button clicked.";
+    }
+
+    // Function to load preference
+    function loadPreference() {
+      const clicked = localStorage.getItem("clicked");
+      if (clicked === "true") {
+        statusDiv.textContent = "Welcome back! You already clicked the button.";
+      }
+    }
+
+    // Add animation and save preference on click
+    btn.addEventListener("click", () => {
+      btn.classList.add("animate");
+      setTimeout(() => {
+        btn.classList.remove("animate");
+      }, 500);
+      savePreference();
+    });
+
+    // Load saved preference on page load
+    window.onload = loadPreference;
+  </script>
+
+</body>
+</html>
